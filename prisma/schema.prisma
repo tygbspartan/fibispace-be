@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         String   @default("user")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("users")
+}
+
+enum ProjectCategory {
+  printing
+  website_creation
+  ui_ux
+  digital_marketing
+}
+
+model Project {
+  id               Int               @id @default(autoincrement())
+  title            String
+  description      String
+  category         ProjectCategory[]
+  mainImage        String            @map("main_image")
+  thumbnailImages  String[]          @default([]) @map("thumbnail_images")
+  keyFindings      String[]          @default([]) @map("key_findings")
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+
+  @@index([createdAt(sort: Desc)])
+  @@map("projects")
+}
