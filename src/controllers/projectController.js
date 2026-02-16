@@ -37,13 +37,6 @@ exports.createProject = async (req, res) => {
       ? typeof keyFindings === 'string' ? JSON.parse(keyFindings) : keyFindings
       : [];
 
-    // Validate max 10 thumbnails
-    if (thumbnailImagesArray.length > 10) {
-      return res.status(400).json({ 
-        error: 'Maximum 10 thumbnail images allowed' 
-      });
-    }
-
     // Validate URLs (basic check)
     const urlPattern = /^https?:\/\/.+/;
     if (!urlPattern.test(mainImage)) {

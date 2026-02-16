@@ -18,23 +18,54 @@ model User {
 }
 
 enum ProjectCategory {
-  printing
-  website_creation
+  smm
+  graphic_design
   ui_ux
-  digital_marketing
+  web_development
+  seo
+  ad_commercial
+  event_management
+  product_shoot
 }
 
 model Project {
-  id               Int               @id @default(autoincrement())
-  title            String
-  description      String
-  category         ProjectCategory[]
-  mainImage        String            @map("main_image")
-  thumbnailImages  String[]          @default([]) @map("thumbnail_images")
-  keyFindings      String[]          @default([]) @map("key_findings")
-  createdAt        DateTime          @default(now()) @map("created_at")
-  updatedAt        DateTime          @updatedAt @map("updated_at")
+  id              Int               @id @default(autoincrement())
+  title           String
+  description     String
+  category        ProjectCategory[]
+  mainImage       String            @map("main_image")
+  thumbnailImages String[]          @default([]) @map("thumbnail_images")
+  keyFindings     String[]          @default([]) @map("key_findings")
+  isFeatured      Boolean           @default(false)
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
 
   @@index([createdAt(sort: Desc)])
   @@map("projects")
+}
+
+model Team {
+  id          Int      @id @default(autoincrement())
+  name        String
+  designation String
+  image       String
+  aboutMe     String
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("teams")
+}
+
+model ContactInfos {
+  id        Int      @id @default(autoincrement())
+  name      String
+  orgName   String?
+  phone     String
+  email     String
+  service   String?
+  message   String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("contactinfos")
 }
