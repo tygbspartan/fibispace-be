@@ -3,17 +3,18 @@ const sendMail = require("../utils/sendMail");
 
 class ContactService {
   async contactUsService(data) {
+    console.log(process.env.SMTP_TO)
     await sendMail({
       to: process.env.SMTP_TO,
       subject: "Enquiry",
       html: `
         <h1>Enquiry Alert</h1>
-        <p>${data.name} </p>
-        <p>${data.orgName} </p>
-        <p>${data.phone} </p>
-        <p>${data.email} </p>
-        <p>${data.service} </p>
-        <p>${data.message} </p>
+        <p>Name: ${data.name} </p>
+        <p>Organization Name: ${data.orgName} </p>
+        <p>Phone: ${data.phone} </p>
+        <p>Email: ${data.email} </p>
+        <p>Service: ${data.service} </p>
+        <p>Message: ${data.message} </p>
       
       `,
     });
