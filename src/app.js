@@ -5,6 +5,7 @@ const authRoutes = require('./routes/auth');
 const projectRoutes = require('./routes/projects');
 const teamRoutes = require('./routes/teams');
 const contactRoutes = require('./routes/contactUs');
+const clientRoutes = require('./routes/clients');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/teams', teamRoutes);
 app.use('/api/contactUs', contactRoutes);
+app.use('/api/clients', clientRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

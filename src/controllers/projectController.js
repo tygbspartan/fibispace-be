@@ -19,9 +19,9 @@ exports.createProject = async (req, res) => {
       });
     }
 
-    if (!isFeatured) {
-      isFeatured = false;
-    }
+    // if (!isFeatured) {
+    //   isFeatured = false;
+    // }
 
     // Parse arrays if they're strings
     let categoryArray;
@@ -34,10 +34,14 @@ exports.createProject = async (req, res) => {
 
     // Validate categories
     const validCategories = [
-      "printing",
-      "website_creation",
+      "smm",
+      "graphic_design",
       "ui_ux",
-      "digital_marketing",
+      "web_development",
+      "seo",
+      "ad_commercial",
+      "event_management",
+      "product_shoot",
     ];
     const invalidCategories = categoryArray.filter(
       (cat) => !validCategories.includes(cat),
@@ -80,7 +84,7 @@ exports.createProject = async (req, res) => {
       mainImage,
       thumbnailImages: thumbnailImagesArray,
       keyFindings: keyFindingsArray,
-      isFeatured: isFeatured
+      isFeatured: isFeatured,
     };
 
     const project = await projectService.createProject(projectData);
@@ -142,6 +146,7 @@ exports.updateProject = async (req, res) => {
       mainImage,
       thumbnailImages,
       keyFindings,
+      isFeatured,
     } = req.body;
 
     const project = await projectService.findProjectById(id);
@@ -158,10 +163,14 @@ exports.updateProject = async (req, res) => {
       const categoryArray =
         typeof category === "string" ? JSON.parse(category) : category;
       const validCategories = [
-        "printing",
-        "website_creation",
+        "smm",
+        "graphic_design",
         "ui_ux",
-        "digital_marketing",
+        "web_development",
+        "seo",
+        "ad_commercial",
+        "event_management",
+        "product_shoot",
       ];
       const invalidCategories = categoryArray.filter(
         (cat) => !validCategories.includes(cat),
@@ -211,6 +220,9 @@ exports.updateProject = async (req, res) => {
         typeof keyFindings === "string" ? JSON.parse(keyFindings) : keyFindings;
     }
 
+    if (isFeatured) {
+      updateData.isFeatured = isFeatured;
+    }
     const updatedProject = await projectService.updateProject(id, updateData);
     res.json({
       message: "Project updated successfully",

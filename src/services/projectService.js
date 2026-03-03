@@ -1,4 +1,4 @@
-const prisma = require('../config/prisma');
+const prisma = require("../config/prisma");
 
 class ProjectService {
   async createProject(projectData) {
@@ -10,6 +10,7 @@ class ProjectService {
         mainImage: projectData.mainImage,
         thumbnailImages: projectData.thumbnailImages || [],
         keyFindings: projectData.keyFindings || [],
+        isFeatured: projectData.isFeatured || false,
       },
     });
   }
@@ -27,7 +28,7 @@ class ProjectService {
     return await prisma.project.findMany({
       where,
       orderBy: {
-        createdAt: 'desc',
+        createdAt: "desc",
       },
     });
   }
@@ -42,11 +43,24 @@ class ProjectService {
     const data = {};
 
     if (projectData.title !== undefined) data.title = projectData.title;
-    if (projectData.description !== undefined) data.description = projectData.description;
-    if (projectData.category !== undefined) data.category = projectData.category;
-    if (projectData.mainImage !== undefined) data.mainImage = projectData.mainImage;
-    if (projectData.thumbnailImages !== undefined) data.thumbnailImages = projectData.thumbnailImages;
-    if (projectData.keyFindings !== undefined) data.keyFindings = projectData.keyFindings;
+
+    if (projectData.description !== undefined)
+      data.description = projectData.description;
+
+    if (projectData.category !== undefined)
+      data.category = projectData.category;
+
+    if (projectData.mainImage !== undefined)
+      data.mainImage = projectData.mainImage;
+
+    if (projectData.thumbnailImages !== undefined)
+      data.thumbnailImages = projectData.thumbnailImages;
+
+    if (projectData.keyFindings !== undefined)
+      data.keyFindings = projectData.keyFindings;
+
+    if (projectData.isFeatured != undefined)
+      data.isFeatured = projectData.isFeatured;
 
     return await prisma.project.update({
       where: { id: parseInt(id) },
@@ -71,19 +85,19 @@ class ProjectService {
           {
             title: {
               contains: searchTerm,
-              mode: 'insensitive',
+              mode: "insensitive",
             },
           },
           {
             description: {
               contains: searchTerm,
-              mode: 'insensitive',
+              mode: "insensitive",
             },
           },
         ],
       },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: "desc",
       },
     });
   }

@@ -56,6 +56,16 @@ model Team {
   @@map("teams")
 }
 
+model Client {
+  id        Int      @id @default(autoincrement())
+  name      String
+  image     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("clients")
+}
+
 model ContactInfos {
   id        Int      @id @default(autoincrement())
   name      String
